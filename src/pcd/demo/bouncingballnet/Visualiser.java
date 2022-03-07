@@ -2,7 +2,7 @@ package pcd.demo.bouncingballnet;
 
 public class Visualiser extends Thread {
     
-    private final boolean stop;
+    private boolean stop;
     private final Context context;
     private final VisualiserFrame frame;
     
@@ -19,9 +19,13 @@ public class Visualiser extends Thread {
             //log("update pos");
             try {
                 Thread.sleep(20);     
-            } catch (Exception ex){
+            } catch (Exception ignored){
             }
         }
+    }
+
+    public void die() {
+        this.stop = true;
     }
     
     private void log(String msg){

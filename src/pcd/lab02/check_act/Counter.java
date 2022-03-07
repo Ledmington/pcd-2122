@@ -7,8 +7,9 @@ public class Counter {
 	private final int max;
 	
 	public Counter(int min, int max){
-		this.cont = this.min = min;
+		this.min = min;
 		this.max = max;
+		this.cont = max;
 	}
 	
 	public synchronized void inc() throws OverflowException {
