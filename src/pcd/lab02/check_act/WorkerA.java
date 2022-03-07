@@ -2,8 +2,8 @@ package pcd.lab02.check_act;
 
 public class WorkerA extends Thread{
 	
-	private Counter counter;
-	private int ntimes;
+	private final Counter counter;
+	private final int ntimes;
 	
 	public WorkerA(Counter c, int ntimes){
 		counter = c;

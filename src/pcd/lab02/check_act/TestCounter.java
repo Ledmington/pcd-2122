@@ -10,7 +10,7 @@ public class TestCounter {
 
 	public static void main(String[] args) throws Exception {
 		int ntimes = 10000;
-		Counter c = new Counter(0,1);
+		Counter c = new Counter(0, 1);
 		WorkerA w1a = new WorkerA(c,ntimes);
 		WorkerA w1b = new WorkerA(c,ntimes);
 		WorkerB w2a = new WorkerB(c,ntimes);
