@@ -22,7 +22,7 @@ public class TestLostUpdate {
 	}
 
 	static class MyThread extends Thread {
-		private Counter c;
+		private final Counter c;
 		
 		public MyThread(Counter c){
 			this.c = c;
