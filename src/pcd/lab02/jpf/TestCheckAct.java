@@ -1,11 +1,11 @@
 package pcd.lab02.jpf;
 
-import gov.nasa.jpf.vm.Verify;
+//import gov.nasa.jpf.vm.Verify;
 
 /**
  * Check race condition: check-and-act concurrency hazard
  */
-public class TestCheckAct {
+/*public class TestCheckAct {
 
 	static class Counter {
 		private int count;
@@ -54,3 +54,4 @@ public class TestCheckAct {
 	}
 
 }
+*/

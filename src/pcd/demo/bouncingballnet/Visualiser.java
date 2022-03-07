@@ -2,9 +2,9 @@ package pcd.demo.bouncingballnet;
 
 public class Visualiser extends Thread {
     
-    private boolean stop;
-    private Context context;
-    private VisualiserFrame frame;
+    private final boolean stop;
+    private final Context context;
+    private final VisualiserFrame frame;
     
     public Visualiser(Context context){
         stop = false;
