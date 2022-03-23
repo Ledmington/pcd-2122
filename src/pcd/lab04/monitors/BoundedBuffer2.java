@@ -4,11 +4,12 @@ import java.util.concurrent.locks.*;
 
 public class BoundedBuffer2<Item> implements IBoundedBuffer<Item> {
 
-	private Item[] buffer;
+	private final Item[] buffer;
 	private int in; // points to the next free position
 	private int out; // points to the next full position
-	private Lock mutex;
-	private Condition notEmpty, notFull;
+	private final Lock mutex;
+	private final Condition notEmpty;
+	private final Condition notFull;
 
 	public BoundedBuffer2(int size) {
 		in = 0;

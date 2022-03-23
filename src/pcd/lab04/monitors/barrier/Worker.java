@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Worker extends Thread {
 
-	private Barrier barrier;
+	private final Barrier barrier;
 	
 	public Worker(String name, Barrier barrier) {
 		super(name);
@@ -14,10 +14,11 @@ public class Worker extends Thread {
 	public void run() {
 		Random gen = new Random(System.nanoTime());
 		try {
-			waitFor(gen.nextInt(3000));
-			log("before");
-			barrier.hitAndWaitAll();
-			log("after");
+			for(int i=0; i<10; i++) {
+				log("before " + i);
+				barrier.hitAndWaitAll();
+				log("after " + i);
+			}
 		} catch (InterruptedException ex) {
 			log("Interrupted!");
 		}
@@ -27,9 +28,5 @@ public class Worker extends Thread {
 		synchronized(System.out) {
 			System.out.println("[ "+getName()+" ] "+msg);
 		}
-	}
-	
-	private void waitFor(long ms) throws InterruptedException{
-		Thread.sleep(ms);
 	}
 }

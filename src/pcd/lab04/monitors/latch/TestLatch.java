@@ -12,12 +12,12 @@ public class TestLatch {
 		
 		Latch latch = new FakeLatch(nThreadB);
 		
-		List<ThreadA> threadsAlist = new ArrayList<ThreadA>();
+		List<ThreadA> threadsAlist = new ArrayList<>();
 		for (int i = 0; i < nThreadA; i++) {
 			threadsAlist.add(new ThreadA("ThreadA-" + i, latch));
 		}
 
-		List<ThreadB> threadsBlist = new ArrayList<ThreadB>();
+		List<ThreadB> threadsBlist = new ArrayList<>();
 		for (int i = 0; i < nThreadB; i++) {
 			threadsBlist.add(new ThreadB("ThreadB-" + i, latch));
 		}

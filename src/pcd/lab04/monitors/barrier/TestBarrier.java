@@ -9,9 +9,9 @@ public class TestBarrier {
 		
 		int nWorkers = 10;
 		
-		Barrier barrier = new FakeBarrier(nWorkers);
+		Barrier barrier = new ReusableBarrier(nWorkers);
 		
-		List<Worker> workers = new ArrayList<Worker>();
+		List<Worker> workers = new ArrayList<>();
 		for (int i = 0; i < nWorkers; i++) {
 			workers.add(new Worker("Worker-"+i, barrier));
 		}
@@ -19,6 +19,5 @@ public class TestBarrier {
 		for (Worker w: workers) {
 			w.start();
 		}
-		
 	}
 }
