@@ -7,15 +7,14 @@ import pcd.demo.common.*;
 
 
 /**
- * Class representing a target peer 
- * 
- * @author aricci
+ * Class representing a target peer
  *
+ * @author aricci
  */
 public class Peer {
 	private InetSocketAddress address;
 	private DatagramSocket socket;
-	
+
 	public Peer(InetSocketAddress targetAddr) throws Exception {
 		address = targetAddr;
 		socket = new DatagramSocket();
@@ -32,14 +31,14 @@ public class Peer {
 			out.writeUTF(local.getHostName());
 			out.writeInt(local.getPort());
 			byte[] barray = bout.toByteArray();
-			DatagramPacket msg = new DatagramPacket(barray,barray.length,address);
+			DatagramPacket msg = new DatagramPacket(barray, barray.length, address);
 			socket.send(msg);
-		} catch (Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.err.println("Error in attaching peer.");
 		}
 	}
-	
+
 	/**
 	 * Informs the target peer to attach current node on the right
 	 */
@@ -51,9 +50,9 @@ public class Peer {
 			out.writeUTF(local.getHostName());
 			out.writeInt(local.getPort());
 			byte[] barray = bout.toByteArray();
-			DatagramPacket msg = new DatagramPacket(barray,barray.length,address);
+			DatagramPacket msg = new DatagramPacket(barray, barray.length, address);
 			socket.send(msg);
-		} catch (Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.err.println("Error in attaching peer.");
 		}
@@ -62,7 +61,7 @@ public class Peer {
 	/**
 	 * Sends a ball to the peer
 	 */
-	public void sendBall(P2d pos, V2d v, double speed){
+	public void sendBall(P2d pos, V2d v, double speed) {
 		try {
 			ByteArrayOutputStream bout = new ByteArrayOutputStream(64);
 			DataOutputStream out = new DataOutputStream(bout);
@@ -71,11 +70,11 @@ public class Peer {
 			out.writeDouble(pos.y);
 			out.writeDouble(v.x);
 			out.writeDouble(v.y);
-			out.writeDouble(speed);			
+			out.writeDouble(speed);
 			byte[] barray = bout.toByteArray();
-			DatagramPacket msg = new DatagramPacket(barray,barray.length,address);
+			DatagramPacket msg = new DatagramPacket(barray, barray.length, address);
 			socket.send(msg);
-		} catch (Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			System.err.println("Error in sending the ball.");
 		}

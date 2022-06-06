@@ -13,36 +13,37 @@ public class Test02b_creation_async {
 		Observable<Integer> source = Observable.create(emitter -> {
 			new Thread(() -> {
 				int i = 0;
-				while (i < 20){
+				while (i < 20) {
 					try {
-						log("source: "+i); 
+						log("source: " + i);
 						emitter.onNext(i);
 						Thread.sleep(200);
 						i++;
-					} catch (Exception ignored){}
+					} catch (Exception ignored) {
+					}
 				}
 			}).start();
-		 });
+		});
 
 		Thread.sleep(1000);
-		
+
 		log("Subscribing A.");
-		
+
 		source.subscribe((s) -> {
-			log("Subscriber A: " + s); 
-		});	
+			log("Subscriber A: " + s);
+		});
 
 		Thread.sleep(1000);
 
 		log("Subscribing B.");
 
 		source.subscribe((s) -> {
-			log("Subscriber B: " + s); 
-		});	
+			log("Subscriber B: " + s);
+		});
 
 		System.out.println("Done.");
 	}
-	
+
 	static private void log(String msg) {
 		System.out.println("[ " + Thread.currentThread().getName() + "  ] " + msg);
 	}

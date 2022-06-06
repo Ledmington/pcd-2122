@@ -5,9 +5,8 @@ import java.util.HashMap;
 /**
  * Model component used to keep track of statistics
  * when doing project analysis.
- * 
- * @author aricci
  *
+ * @author aricci
  */
 public class Statistics {
 
@@ -16,15 +15,15 @@ public class Statistics {
 	private HashMap<String, String> packMap;
 	private int numMethods;
 	private int numFields;
-		
+
 	static class StatSnapshot {
 		private int numMethods;
 		private int numFields;
 		private int numClasses;
 		private int numInterfaces;
 		private int numPackages;
-	
-		StatSnapshot(int numPackages, int numClasses, int numInterfaces, int numMethods, int numFields){
+
+		StatSnapshot(int numPackages, int numClasses, int numInterfaces, int numMethods, int numFields) {
 			this.numClasses = numClasses;
 			this.numFields = numFields;
 			this.numInterfaces = numInterfaces;
@@ -52,8 +51,8 @@ public class Statistics {
 			return numPackages;
 		}
 	}
-	
-	public Statistics(){
+
+	public Statistics() {
 		clMap = new HashMap<String, String>();
 		intMap = new HashMap<String, String>();
 		packMap = new HashMap<String, String>();
@@ -61,37 +60,37 @@ public class Statistics {
 		numFields = 0;
 	}
 
-	public  void notifyNewClass(String name) {
+	public void notifyNewClass(String name) {
 		if (clMap.get(name) == null) {
 			clMap.put(name, name);
 		}
 	}
 
-	public  void notifyNewInterface(String name) {
+	public void notifyNewInterface(String name) {
 		if (intMap.get(name) == null) {
 			intMap.put(name, name);
 		}
 	}
 
-	public  void notifyNewPackage(String name) {
+	public void notifyNewPackage(String name) {
 		if (packMap.get(name) == null) {
 			packMap.put(name, name);
 		}
 	}
 
-	public  void notifyNewMethod() {
+	public void notifyNewMethod() {
 		numMethods++;
 	}
 
-	public  void notifyNewField() {
+	public void notifyNewField() {
 		numFields++;
 	}
 
 	public StatSnapshot getSnapshot() {
 		return new StatSnapshot(packMap.size(), clMap.size(), intMap.size(), numMethods, numFields);
 	}
-	
-	public  void reset() {
+
+	public void reset() {
 		clMap.clear();
 		intMap.clear();
 		packMap.clear();

@@ -8,13 +8,13 @@ public class FieldInfoImp implements FieldInfo {
 	private String name;
 	private String type;
 	private ClassReport parent;
-	
-	FieldInfoImp(String name, String type, ClassReport parent){
+
+	FieldInfoImp(String name, String type, ClassReport parent) {
 		this.name = name;
 		this.type = type;
 		this.parent = parent;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;

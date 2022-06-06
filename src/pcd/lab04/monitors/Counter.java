@@ -4,15 +4,15 @@ public class Counter {
 
 	private int count;
 
-	public Counter(){
+	public Counter() {
 		count = 0;
 	}
 
-	public synchronized void inc(){
+	public synchronized void inc() {
 		count++;
 	}
 
-	public synchronized int getValue(){
+	public synchronized int getValue() {
 		return count;
 	}
 }

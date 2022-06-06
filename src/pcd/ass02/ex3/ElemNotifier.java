@@ -19,7 +19,7 @@ public class ElemNotifier {
 	static public final String NEW_FIELD_FOUND = "new-field-found";
 
 	private ObservableEmitter<JsonObject> stream;
-	
+
 	public ElemNotifier(ObservableEmitter<JsonObject> stream) {
 		this.stream = stream;
 	}
@@ -27,40 +27,40 @@ public class ElemNotifier {
 	public void notifyNewPackageDeclared(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_PACKAGE_DECLARED)
-		.put("name", name);
+				.put("event", NEW_PACKAGE_DECLARED)
+				.put("name", name);
 		stream.onNext(msg);
 	}
 
 	public void notifyNewClass(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_CLASS_FOUND)
-		.put("name", name);
+				.put("event", NEW_CLASS_FOUND)
+				.put("name", name);
 		stream.onNext(msg);
 	}
 
 	public void notifyNewInterface(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_INTERFACE_FOUND)
-		.put("name", name);
+				.put("event", NEW_INTERFACE_FOUND)
+				.put("name", name);
 		stream.onNext(msg);
 	}
 
 	public void notifyNewField(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_FIELD_FOUND)
-		.put("name", name);
+				.put("event", NEW_FIELD_FOUND)
+				.put("name", name);
 		stream.onNext(msg);
 	}
 
 	public void notifyNewMethod(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_METHOD_FOUND)
-		.put("name", name);
+				.put("event", NEW_METHOD_FOUND)
+				.put("name", name);
 		stream.onNext(msg);
 	}
 

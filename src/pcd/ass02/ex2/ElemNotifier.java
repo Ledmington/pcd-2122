@@ -5,11 +5,10 @@ import io.vertx.core.json.JsonObject;
 
 /**
  * Component attached to the visitor
- * to notify events about elements 
+ * to notify events about elements
  * on the event bus.
- * 
- * @author aricci
  *
+ * @author aricci
  */
 public class ElemNotifier {
 
@@ -21,7 +20,7 @@ public class ElemNotifier {
 
 	private Vertx vertx;
 	private String topic;
-	
+
 	public ElemNotifier(Vertx vertx, String topic) {
 		this.vertx = vertx;
 		this.topic = topic;
@@ -30,40 +29,40 @@ public class ElemNotifier {
 	public void notifyNewPackageDeclared(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_PACKAGE_DECLARED)
-		.put("name", name);
+				.put("event", NEW_PACKAGE_DECLARED)
+				.put("name", name);
 		vertx.eventBus().publish(topic, msg);
 	}
 
 	public void notifyNewClass(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_CLASS_FOUND)
-		.put("name", name);
+				.put("event", NEW_CLASS_FOUND)
+				.put("name", name);
 		vertx.eventBus().publish(topic, msg);
 	}
 
 	public void notifyNewInterface(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_INTERFACE_FOUND)
-		.put("name", name);
+				.put("event", NEW_INTERFACE_FOUND)
+				.put("name", name);
 		vertx.eventBus().publish(topic, msg);
 	}
 
 	public void notifyNewField(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_FIELD_FOUND)
-		.put("name", name);
+				.put("event", NEW_FIELD_FOUND)
+				.put("name", name);
 		vertx.eventBus().publish(topic, msg);
 	}
 
 	public void notifyNewMethod(String name) {
 		JsonObject msg = new JsonObject();
 		msg
-		.put("event", NEW_METHOD_FOUND)
-		.put("name", name);
+				.put("event", NEW_METHOD_FOUND)
+				.put("name", name);
 		vertx.eventBus().publish(topic, msg);
 	}
 

@@ -4,7 +4,7 @@ public class MyClassB {
 
 	private int aField;
 	private MyClassB aFriend;
-	
+
 	public void m1() {
 		System.out.println("m1");
 	}
@@ -12,5 +12,5 @@ public class MyClassB {
 	public void m2() {
 		System.out.println("m2");
 	}
-	
+
 }

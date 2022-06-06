@@ -3,14 +3,14 @@ package pcd.lab03.liveness.jpf;
 import pcd.lab03.liveness.*;
 
 public class ThreadB extends BaseAgent {
- 
+
 	private Resource res;
-	
-	public ThreadB(Resource res){
+
+	public ThreadB(Resource res) {
 		this.res = res;
 	}
-	
-	public void run(){
+
+	public void run() {
 		/*
 		while (true){
 			waitAbit();
@@ -20,5 +20,5 @@ public class ThreadB extends BaseAgent {
 
 		res.leftRight();
 
-	}	
+	}
 }

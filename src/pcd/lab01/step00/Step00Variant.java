@@ -3,7 +3,7 @@ package pcd.lab01.step00;
 public class Step00Variant {
 
 	public static void main(String[] args) throws Exception {
-		
+
 		new Thread(() -> {
 			System.out.println("Hello concurrent world! by " + Thread.currentThread().getName());
 			try {
@@ -12,8 +12,8 @@ public class Step00Variant {
 				ex.printStackTrace();
 			}
 			System.out.println("done.");
-		}).start();		
-		
+		}).start();
+
 		String myName = Thread.currentThread().getName();
 		try {
 			Thread.sleep(2000);
@@ -21,6 +21,6 @@ public class Step00Variant {
 			ex.printStackTrace();
 		}
 		System.out.println("Thread spawned - I'm " + myName);
-		
+
 	}
 }

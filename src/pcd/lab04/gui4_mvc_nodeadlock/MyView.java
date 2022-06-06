@@ -17,38 +17,38 @@ class MyView extends JFrame implements ActionListener, ModelObserver {
 
 	private MyController controller;
 	private JTextField state;
-	
+
 	public MyView(MyController controller) {
 		super("My View");
-		
+
 		this.controller = controller;
-		
+
 		setSize(400, 60);
 		setResizable(false);
-		
+
 		JButton button1 = new JButton("Event #1");
 		button1.addActionListener(this);
 
 		JButton button2 = new JButton("Event #2");
 		button2.addActionListener(this);
-		
+
 		state = new JTextField(10);
-		
+
 		JPanel panel = new JPanel();
-		panel.add(button1);		
-		panel.add(button2);	
+		panel.add(button1);
+		panel.add(button2);
 		panel.add(state);
-		
+
 		setLayout(new BorderLayout());
-	    add(panel,BorderLayout.NORTH);
-	    		
+		add(panel, BorderLayout.NORTH);
+
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent ev) {
 				System.exit(-1);
 			}
 		});
 	}
-	
+
 	public void actionPerformed(ActionEvent ev) {
 		try {
 			controller.processEvent(ev.getActionCommand());
@@ -63,7 +63,7 @@ class MyView extends JFrame implements ActionListener, ModelObserver {
 			SwingUtilities.invokeLater(() -> {
 				state.setText("state: " + model.getState());
 			});
-		} catch (Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}

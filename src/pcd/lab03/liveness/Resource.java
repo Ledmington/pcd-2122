@@ -3,18 +3,18 @@ package pcd.lab03.liveness;
 public class Resource {
 	private final Object left = new Object();
 	private final Object right = new Object();
-	
-	public void leftRight(){
-		synchronized(left){
-			synchronized(right){
+
+	public void leftRight() {
+		synchronized (left) {
+			synchronized (right) {
 				doSomething();
 			}
 		}
 	}
-	
-	public void rightLeft(){
-		synchronized(right){
-			synchronized(left){
+
+	public void rightLeft() {
+		synchronized (right) {
+			synchronized (left) {
 				doSomethingElse();
 			}
 		}
@@ -26,11 +26,11 @@ public class Resource {
 		}*/
 	}
 
-	private void doSomething(){
+	private void doSomething() {
 		System.out.println("something.");
 	}
 
-	private void doSomethingElse(){
+	private void doSomethingElse() {
 		System.out.println("something else.");
 	}
 }

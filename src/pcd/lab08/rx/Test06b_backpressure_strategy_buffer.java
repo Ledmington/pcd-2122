@@ -11,25 +11,25 @@ public class Test06b_backpressure_strategy_buffer {
 		System.out.println("\n=== TEST backpressure | strategy BUFFER ===\n");
 
 		/* generator with period 5 ms - strategy BUFFER | specifying size with onBackpressureBuffer*/
-		
+
 		Flowable<Long> source = genHotStream(5);
 
 		log("subscribing.");
 
-		/* with buffer size = 5_000, it generates a MissingBackpressureException 
+		/* with buffer size = 5_000, it generates a MissingBackpressureException
 		 * after ~8000 emits (it depends on the local config) */
-		
+
 		source
-			.onBackpressureBuffer(5_000, () -> {
-				log("HELP!");
-			})
-			.observeOn(Schedulers.computation())
-			.subscribe(v -> {
-				log("consuming " + v);
-				Thread.sleep(100);
-			}, error -> {
-				log("ERROR: " + error);
-			});
+				.onBackpressureBuffer(5_000, () -> {
+					log("HELP!");
+				})
+				.observeOn(Schedulers.computation())
+				.subscribe(v -> {
+					log("consuming " + v);
+					Thread.sleep(100);
+				}, error -> {
+					log("ERROR: " + error);
+				});
 
 		Thread.sleep(1000);
 	}

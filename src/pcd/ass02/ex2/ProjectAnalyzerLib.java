@@ -3,6 +3,7 @@ package pcd.ass02.ex2;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.github.javaparser.StaticJavaParser;
 import io.vertx.core.*;
 import pcd.ass02.*;
@@ -67,7 +68,7 @@ public class ProjectAnalyzerLib implements ProjectAnalyzerExt {
 		var fs = vertx.fileSystem();
 		var listf = fs.readDir(packagePath);
 		listf.onSuccess(l -> {
-			
+
 			/* triggering the creation of a report for each java source in the dir */
 			var fl = new ArrayList<Future>();
 			for (var s : l) {
@@ -84,19 +85,20 @@ public class ProjectAnalyzerLib implements ProjectAnalyzerExt {
 					fl.add(fut);
 				}
 			}
-			
+
 			/* when all the reports are ready, the package report is composed */
 			CompositeFuture
-			.all(fl)
-			.onSuccess(res -> {
-				p.complete(rep);
-			});
+					.all(fl)
+					.onSuccess(res -> {
+						p.complete(rep);
+					});
 		});
 		return p.future();
 	}
 
 	/**
 	 * Auxiliary method to collect all the directories from some initial rootDir
+	 *
 	 * @param rootDir
 	 * @param collectedDirs
 	 * @return
@@ -115,10 +117,10 @@ public class ProjectAnalyzerLib implements ProjectAnalyzerExt {
 				}
 			}
 			CompositeFuture
-			.all(subd)
-			.onSuccess(h -> {
-				p.complete();
-			});
+					.all(subd)
+					.onSuccess(h -> {
+						p.complete();
+					});
 		});
 		return p.future();
 
@@ -129,28 +131,28 @@ public class ProjectAnalyzerLib implements ProjectAnalyzerExt {
 		var listf = new ArrayList<Future>();
 		listf.add(getPackageReport(path));
 		var dirs = new ArrayList<String>();
-		
+
 		/* first collect all directories */
 		collectDirs(path, dirs)
-		.onSuccess(h -> {
-			ProjectReportImp rep = new ProjectReportImp();
-			/* then for each dir try to build a package report */
-			for (var d : dirs) {
-				var fut = getPackageReport(d);
-				fut.onSuccess(r -> {
-					/* add the report only if there are classes or interfaces */
-					if (r.getClassesInfo().size() > 0 || r.getInterfacesInfo().size() > 0) {
-						rep.addPackageReport(r);
+				.onSuccess(h -> {
+					ProjectReportImp rep = new ProjectReportImp();
+					/* then for each dir try to build a package report */
+					for (var d : dirs) {
+						var fut = getPackageReport(d);
+						fut.onSuccess(r -> {
+							/* add the report only if there are classes or interfaces */
+							if (r.getClassesInfo().size() > 0 || r.getInterfacesInfo().size() > 0) {
+								rep.addPackageReport(r);
+							}
+						});
+						listf.add(fut);
 					}
+					CompositeFuture
+							.all(listf)
+							.onSuccess(res -> {
+								p.complete(rep);
+							});
 				});
-				listf.add(fut);
-			}
-			CompositeFuture
-			.all(listf)
-			.onSuccess(res -> {
-				p.complete(rep);
-			});
-		});
 		return p.future();
 	}
 
@@ -188,13 +190,13 @@ public class ProjectAnalyzerLib implements ProjectAnalyzerExt {
 				}
 			}
 			CompositeFuture
-			.all(fl)
-			.onSuccess(res -> {
-				p.complete();
-			})
-			.onFailure(err -> {
-				p.fail(err);
-			});
+					.all(fl)
+					.onSuccess(res -> {
+						p.complete();
+					})
+					.onFailure(err -> {
+						p.fail(err);
+					});
 		});
 		return p.future();
 	}
@@ -205,25 +207,25 @@ public class ProjectAnalyzerLib implements ProjectAnalyzerExt {
 		listf.add(analysePackage(path, topic));
 
 		var collectedDirs = new ArrayList<String>();
-		
+
 		/* first collect dirs */
 		collectDirs(path, collectedDirs)
-		.onSuccess(h -> {
-			
-			/* for each dir, explore it as a package */
-			for (var d : collectedDirs) {
-				listf.add(analysePackage(d, topic));
-			}
-			
-			CompositeFuture
-			.all(listf)
-			.onSuccess(res -> {
-				p.complete();
-			})
-			.onFailure(err -> {
-				p.fail(err);
-			});
-		});
+				.onSuccess(h -> {
+
+					/* for each dir, explore it as a package */
+					for (var d : collectedDirs) {
+						listf.add(analysePackage(d, topic));
+					}
+
+					CompositeFuture
+							.all(listf)
+							.onSuccess(res -> {
+								p.complete();
+							})
+							.onFailure(err -> {
+								p.fail(err);
+							});
+				});
 		return p.future();
 
 	}

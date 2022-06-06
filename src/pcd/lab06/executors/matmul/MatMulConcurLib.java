@@ -9,26 +9,26 @@ public class MatMulConcurLib {
 	private static MatMulConcurLib instance;
 	private ExecutorService exec;
 
-	public static MatMulConcurLib getInstance(){
+	public static MatMulConcurLib getInstance() {
 		synchronized (MatMulConcurLib.class) {
 			if (instance == null) {
 				instance = new MatMulConcurLib();
-			} 
+			}
 			return instance;
 		}
 	}
 
 	private MatMulConcurLib() {
 	}
-	
+
 	public Mat matmul(Mat matA, Mat matB) throws MatMulException {
 		Mat matC = new Mat(matA.getNRows(), matB.getNColumns());
-		exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);		
+		exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
 		try {
-			for (int i = 0; i < matA.getNRows(); i++){
-				for (int j = 0; j < matB.getNColumns(); j++){
-					exec.execute(new ComputeElemTask(i,j,matA,matB,matC));
-					
+			for (int i = 0; i < matA.getNRows(); i++) {
+				for (int j = 0; j < matB.getNColumns(); j++) {
+					exec.execute(new ComputeElemTask(i, j, matA, matB, matC));
+
 					// Alternative: using a lambda expression to specify the task
 					/* 					
 					exec.execute(() -> {
@@ -42,9 +42,9 @@ public class MatMulConcurLib {
 				}
 			}
 			exec.shutdown();
-			exec.awaitTermination(Long.MAX_VALUE,TimeUnit.SECONDS);
+			exec.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
 			return matC;
-		} catch (Exception ex){
+		} catch (Exception ex) {
 			throw new MatMulException();
 		}
 	}

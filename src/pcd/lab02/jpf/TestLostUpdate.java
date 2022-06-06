@@ -7,38 +7,38 @@ public class TestLostUpdate {
 
 	static class Counter {
 		private int count;
-		
-		public Counter(){
+
+		public Counter() {
 			count = 0;
 		}
-		
-		public void inc(){
+
+		public void inc() {
 			count++;
 		}
-		
-		public int getCount(){
+
+		public int getCount() {
 			return count;
 		}
 	}
 
 	static class MyThread extends Thread {
 		private final Counter c;
-		
-		public MyThread(Counter c){
+
+		public MyThread(Counter c) {
 			this.c = c;
 		}
-		
-		public void run(){
-			System.out.println("before inc "+this.getName());
+
+		public void run() {
+			System.out.println("before inc " + this.getName());
 			// synchronized (c){			
-				c.inc();
+			c.inc();
 			// }
-			System.out.println("after inc "+this.getName());
-		}		
-	}	
-	
+			System.out.println("after inc " + this.getName());
+		}
+	}
+
 	public static void main(String[] args) throws Exception {
-		
+
 		Counter c = new Counter();
 		Thread th0 = new MyThread(c);
 		Thread th1 = new MyThread(c);
@@ -48,7 +48,7 @@ public class TestLostUpdate {
 		th1.join();
 		int value = c.getCount();
 		assert value == 2;
-		
+
 	}
-	
+
 }

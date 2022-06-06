@@ -5,12 +5,12 @@ import java.util.Random;
 public class ThreadA extends Thread {
 
 	private Latch latch;
-	
+
 	public ThreadA(String name, Latch latch) {
 		super(name);
 		this.latch = latch;
 	}
-	
+
 	public void run() {
 		try {
 			log("waiting opening.");
@@ -20,14 +20,14 @@ public class ThreadA extends Thread {
 			log("Interrupted!");
 		}
 	}
-	
+
 	private void log(String msg) {
-		synchronized(System.out) {
-			System.out.println("[ "+getName()+" ] "+msg);
+		synchronized (System.out) {
+			System.out.println("[ " + getName() + " ] " + msg);
 		}
 	}
-	
-	private void waitFor(long ms) throws InterruptedException{
+
+	private void waitFor(long ms) throws InterruptedException {
 		Thread.sleep(ms);
 	}
 }

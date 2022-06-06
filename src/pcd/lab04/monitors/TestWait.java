@@ -2,17 +2,17 @@ package pcd.lab04.monitors;
 
 public class TestWait {
 
-	public static void main(String[] args) throws Exception  {
+	public static void main(String[] args) throws Exception {
 		Object obj = new Object();
-		
-		new Thread(() ->  {
+
+		new Thread(() -> {
 			System.out.println("notifying...");
 			synchronized (obj) {
 				obj.notify();
 			}
 		}).start();
-		
-		new Thread(() ->  {
+
+		new Thread(() -> {
 			try {
 				synchronized (obj) {
 					obj.wait();
@@ -22,7 +22,7 @@ public class TestWait {
 			}
 		}).start();
 
-		
+
 	}
 
 }

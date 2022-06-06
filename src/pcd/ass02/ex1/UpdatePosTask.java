@@ -6,12 +6,12 @@ public class UpdatePosTask implements Callable<Void> {
 
 	private SimulationModel model;
 	private int bodyIndex;
-	
+
 	public UpdatePosTask(SimulationModel model, int bodyIndex) {
 		this.model = model;
 		this.bodyIndex = bodyIndex;
 	}
-	
+
 	public Void call() {
 		Body b = model.getBody(bodyIndex);
 		b.updatePos(model.getDT());
@@ -19,5 +19,5 @@ public class UpdatePosTask implements Callable<Void> {
 		return null;
 	}
 
-	
+
 }

@@ -5,29 +5,29 @@ import java.util.*;
 class Consumer extends Thread {
 
 	private IBoundedBuffer<Integer> buffer;
-	
-	public Consumer(IBoundedBuffer<Integer> buffer){
+
+	public Consumer(IBoundedBuffer<Integer> buffer) {
 		this.buffer = buffer;
 	}
 
-	public void run(){
-		while (true){
+	public void run() {
+		while (true) {
 			try {
 				Integer item = buffer.get();
 				consume(item);
-			} catch (InterruptedException ex){
+			} catch (InterruptedException ex) {
 				ex.printStackTrace();
 			}
 		}
 	}
-	
-	private void consume(Integer item){
-		log("consumed "+item);
+
+	private void consume(Integer item) {
+		log("consumed " + item);
 	}
-	
-	private void log(String st){
-		synchronized(System.out){
-			System.out.println("["+this.getName()+"] "+st);
+
+	private void log(String st) {
+		synchronized (System.out) {
+			System.out.println("[" + this.getName() + "] " + st);
 		}
 	}
 }

@@ -6,12 +6,12 @@ import java.util.List;
 public class TestLatch {
 
 	public static void main(String[] args) {
-		
+
 		int nThreadA = 10;
 		int nThreadB = 10;
-		
+
 		Latch latch = new FakeLatch(nThreadB);
-		
+
 		List<ThreadA> threadsAlist = new ArrayList<>();
 		for (int i = 0; i < nThreadA; i++) {
 			threadsAlist.add(new ThreadA("ThreadA-" + i, latch));
@@ -22,13 +22,13 @@ public class TestLatch {
 			threadsBlist.add(new ThreadB("ThreadB-" + i, latch));
 		}
 
-		for (ThreadA t: threadsAlist) {
+		for (ThreadA t : threadsAlist) {
 			t.start();
 		}
-		
-		for (ThreadB t: threadsBlist) {
+
+		for (ThreadB t : threadsBlist) {
 			t.start();
 		}
-		
+
 	}
 }

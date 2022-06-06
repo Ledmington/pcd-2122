@@ -11,7 +11,7 @@ import akka.actor.typed.javadsl.Receive;
 public class CounterActor extends AbstractBehavior<CounterMsg> {
 
 	private int count;
-	
+
 	/* constructor called indirectly */
 
 	private CounterActor(ActorContext<CounterMsg> context) {
@@ -25,7 +25,7 @@ public class CounterActor extends AbstractBehavior<CounterMsg> {
 				.onMessage(IncMsg.class, this::onIncMsg)
 				.onMessage(GetValueMsg.class, this::onGetValueMsg)
 				.build();
-		
+
 	}
 
 	private Behavior<CounterMsg> onIncMsg(IncMsg msg) {
@@ -41,11 +41,13 @@ public class CounterActor extends AbstractBehavior<CounterMsg> {
 	}
 
 	/* messages */
-	
-	static public class IncMsg implements CounterMsg {}
-	
+
+	static public class IncMsg implements CounterMsg {
+	}
+
 	static public class GetValueMsg implements CounterMsg {
 		public final ActorRef replyTo;
+
 		public GetValueMsg(ActorRef replyTo) {
 			this.replyTo = replyTo;
 		}
@@ -53,12 +55,13 @@ public class CounterActor extends AbstractBehavior<CounterMsg> {
 
 	static public class CounterValueMsg implements CounterUserMsg {
 		public final int value;
+
 		public CounterValueMsg(int value) {
 			this.value = value;
 		}
 	}
 
-	
+
 	/* public factory to create the actor */
 
 	public static Behavior<CounterMsg> create() {

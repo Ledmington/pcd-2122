@@ -2,9 +2,8 @@ package pcd.lab06.executors.matmul;
 
 /**
  * Simple class implementing a matrix.
- * 
- * @author aricci
  *
+ * @author aricci
  */
 public class Mat {
 

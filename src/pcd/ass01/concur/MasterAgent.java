@@ -10,7 +10,7 @@ public class MasterAgent extends BaseAgent {
 	private final long nSteps;
 	private final int nWorkers;
 	private final boolean withView;
-	
+
 	public MasterAgent(SimulationModel model, Flag stopFlag) {
 		super("master");
 		this.model = model;
@@ -28,33 +28,33 @@ public class MasterAgent extends BaseAgent {
 		this.nWorkers = nWorkers;
 		withView = false;
 	}
-	
+
 	public void run() {
 
 		/* creating workers */
-		
+
 		CyclicBarrier newCycleBarrier = new CyclicBarrier(nWorkers + 1);
 
 		CyclicBarrier updatePosBarrier = new CyclicBarrier(nWorkers);
-		
+
 		TaskCompletionLatch bodiesReady = new TaskCompletionLatch(nWorkers);
-		
+
 		int nBodiesPerWorker = model.getNumBodies() / nWorkers;
-		
+
 		int startIndex = 0;
-       	int finalIndex = startIndex + nBodiesPerWorker - 1;	
-		for (int i = 0; i < nWorkers - 1; i++){	       		
-			UpdateBodyWorkerAgent worker = 
-       				new UpdateBodyWorkerAgent("" + i, model, startIndex, finalIndex, newCycleBarrier, updatePosBarrier, bodiesReady, stopFlag);
-       		worker.start();
-       		startIndex += nBodiesPerWorker;
-       		finalIndex += nBodiesPerWorker;
-       	}
-		
-   		UpdateBodyWorkerAgent worker = 
-   				new UpdateBodyWorkerAgent("" + nWorkers, model, startIndex, model.getNumBodies() - 1, newCycleBarrier, updatePosBarrier, bodiesReady, stopFlag);
-   		worker.start();
-		
+		int finalIndex = startIndex + nBodiesPerWorker - 1;
+		for (int i = 0; i < nWorkers - 1; i++) {
+			UpdateBodyWorkerAgent worker =
+					new UpdateBodyWorkerAgent("" + i, model, startIndex, finalIndex, newCycleBarrier, updatePosBarrier, bodiesReady, stopFlag);
+			worker.start();
+			startIndex += nBodiesPerWorker;
+			finalIndex += nBodiesPerWorker;
+		}
+
+		UpdateBodyWorkerAgent worker =
+				new UpdateBodyWorkerAgent("" + nWorkers, model, startIndex, model.getNumBodies() - 1, newCycleBarrier, updatePosBarrier, bodiesReady, stopFlag);
+		worker.start();
+
 		long iter = 0;
 
 		/* simulation loop */
@@ -63,25 +63,23 @@ public class MasterAgent extends BaseAgent {
 			while (iter < nSteps && !stopFlag.isSet()) {
 
 				newCycleBarrier.await();
-				
+
 				model.nextCycle();
 				iter++;
-	
+
 				bodiesReady.waitCompletion();
-				
+
 				if (withView) {
 					model.makeSnapshot();
 				}
 			}
-			
+
 			log("done " + iter);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 
 	}
-	
-	
-	
+
 
 }

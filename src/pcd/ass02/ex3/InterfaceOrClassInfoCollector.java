@@ -17,15 +17,15 @@ class InterfaceOrClassInfoCollector extends VoidVisitorAdapter<BaseReportImp> {
 		super.visit(cd, rep);
 		rep.setFullName(cd.getNameAsString());
 	}
-	
-	public void visit(FieldDeclaration fd,  BaseReportImp rep) {
+
+	public void visit(FieldDeclaration fd, BaseReportImp rep) {
 		super.visit(fd, rep);
 		var name = fd.getVariable(0).getName().getIdentifier();
 		var stype = fd.getVariable(0).getTypeAsString();
 		rep.addField(new FieldInfoImp(name, stype, rep));
 	}
 
-	public void visit(MethodDeclaration md,  BaseReportImp rep) {
+	public void visit(MethodDeclaration md, BaseReportImp rep) {
 		super.visit(md, rep);
 		var name = md.getName().asString();
 		var beginLine = md.getRange().get().begin.line;

@@ -13,7 +13,7 @@ import pcd.lab09.actors.basic.CounterActor.IncMsg;
 public class CounterUserActor extends AbstractBehavior<CounterUserMsg> {
 
 	private ActorRef<CounterMsg> counter;
-	
+
 	/* constructor called indirectly */
 
 	private CounterUserActor(ActorContext<CounterUserMsg> context) {
@@ -26,7 +26,7 @@ public class CounterUserActor extends AbstractBehavior<CounterUserMsg> {
 				.onMessage(StartMsg.class, this::onStartMsg)
 				.onMessage(CounterValueMsg.class, this::onCounterValueMsg)
 				.build();
-		
+
 	}
 
 	private Behavior<CounterUserMsg> onStartMsg(StartMsg msg) {
@@ -37,18 +37,19 @@ public class CounterUserActor extends AbstractBehavior<CounterUserMsg> {
 		return this;
 	}
 
-	private Behavior<CounterUserMsg> onCounterValueMsg(CounterValueMsg msg){
+	private Behavior<CounterUserMsg> onCounterValueMsg(CounterValueMsg msg) {
 		this.getContext().getLog().info("value: " + msg.value);
 		return this;
 	}
-	
+
 	static public class StartMsg implements CounterUserMsg {
 		public final ActorRef<CounterMsg> counter;
+
 		public StartMsg(ActorRef<CounterMsg> counter) {
 			this.counter = counter;
 		}
-	}	
-	
+	}
+
 	/* public factory to create the actor */
 
 	public static Behavior<CounterUserMsg> create() {

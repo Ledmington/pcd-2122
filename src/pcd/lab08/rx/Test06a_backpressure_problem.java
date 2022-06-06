@@ -18,13 +18,13 @@ public class Test06a_backpressure_problem {
 		/* generating a MissingBackpressureException after ~7000 emits (it depends on the local config) */
 
 		source
-		.observeOn(Schedulers.computation())
-		.subscribe(v -> {
-			log("consuming " + v);
-			Thread.sleep(100);				// <------ creating a delay in consuming
-		}, error -> {
-			log("ERROR: " + error);
-		});
+				.observeOn(Schedulers.computation())
+				.subscribe(v -> {
+					log("consuming " + v);
+					Thread.sleep(100);                // <------ creating a delay in consuming
+				}, error -> {
+					log("ERROR: " + error);
+				});
 
 		Thread.sleep(1000);
 	}

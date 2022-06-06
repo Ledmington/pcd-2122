@@ -1,11 +1,9 @@
 package pcd.lab04.gui.chrono2_strict;
 
 /**
- * 
  * Passive controller part, designed as a monitor.
- * 
- * @author aricci
  *
+ * @author aricci
  */
 public class Controller {
 
@@ -14,21 +12,21 @@ public class Controller {
 	private CounterAgent agent;
 	private Counter counter;
 	private CounterView view;
-	
+
 	public Controller(Counter counter) {
 		this.counter = counter;
 		this.stopFlag = new Flag();
 	}
-	
+
 	public synchronized void setView(CounterView view) {
 		this.view = view;
 	}
-	
+
 	public synchronized void notifyStarted() {
 		agent = new CounterAgent(counter, stopFlag, view, DELTA_TIME);
-		agent.start();					
+		agent.start();
 	}
-	
+
 	public synchronized void notifyStopped() {
 		stopFlag.set();
 	}

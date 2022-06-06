@@ -8,12 +8,11 @@ import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 /**
  * Visitor used for project analysis
- * 
- * @author aricci
  *
+ * @author aricci
  */
 class InterfaceOrClassAnalyser extends VoidVisitorAdapter<ElemNotifier> {
-		
+
 	public void visit(PackageDeclaration fd, ElemNotifier notifier) {
 		super.visit(fd, notifier);
 		notifier.notifyNewPackageDeclared(fd.getNameAsString());
@@ -27,14 +26,14 @@ class InterfaceOrClassAnalyser extends VoidVisitorAdapter<ElemNotifier> {
 			notifier.notifyNewClass(cd.getNameAsString());
 		}
 	}
-	
-	public void visit(FieldDeclaration fd,  ElemNotifier notifier) {
+
+	public void visit(FieldDeclaration fd, ElemNotifier notifier) {
 		super.visit(fd, notifier);
 		var name = fd.getVariable(0).getName().getIdentifier();
 		notifier.notifyNewField(name);
 	}
 
-	public void visit(MethodDeclaration md,  ElemNotifier notifier) {
+	public void visit(MethodDeclaration md, ElemNotifier notifier) {
 		super.visit(md, notifier);
 		var name = md.getName().asString();
 		notifier.notifyNewMethod(name);

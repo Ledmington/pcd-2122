@@ -1,4 +1,5 @@
 package pcd.lab06.compfut;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -30,13 +31,14 @@ public class Test3_async_apply {
 		// keep main thread alive.
 		waitFor(10000);
 	}
-	
+
 	private static void waitFor(long dt) {
 		try {
 			Thread.sleep(dt);
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+		}
 	}
-	
+
 	private static void log(String msg) {
 		System.out.println("" + Thread.currentThread() + " " + msg);
 	}

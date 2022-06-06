@@ -25,27 +25,27 @@ public class AnalyserGUI extends JFrame implements ActionListener {
 	private JTextField selectedDir;
 	private String selectedDirPath;
 	private JTextArea stats;
-	
+
 	private Controller controller;
-	
-	public AnalyserGUI(Controller contr){
+
+	public AnalyserGUI(Controller contr) {
 		setTitle("Analyser GUI");
-		setSize(300,240);		
+		setSize(300, 240);
 		controller = contr;
 		stats = new JTextArea(8, 20);
-		stats.setEditable(false);		
+		stats.setEditable(false);
 		stats.setText("");
 		selectedDir = new JTextField();
-		selectedDir.setEditable(false);				
+		selectedDir.setEditable(false);
 		chooseDir = new JButton("choose dir");
 		start = new JButton("start");
 		start.setEnabled(false);
-		stop  = new JButton("stop");
+		stop = new JButton("stop");
 		stop.setEnabled(false);
-		
+
 		Container cp = getContentPane();
 		JPanel panel = new JPanel();
-		
+
 		Box p0 = new Box(BoxLayout.X_AXIS);
 		p0.add(chooseDir);
 		p0.add(start);
@@ -62,12 +62,13 @@ public class AnalyserGUI extends JFrame implements ActionListener {
 		p2.add(p1);
 		panel.add(p2);
 		cp.add(panel);
-		
-		addWindowListener(new WindowAdapter(){
-			public void windowClosing(WindowEvent ev){
+
+		addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent ev) {
 				System.exit(-1);
 			}
-			public void windowClosed(WindowEvent ev){
+
+			public void windowClosed(WindowEvent ev) {
 				System.exit(-1);
 			}
 		});
@@ -76,62 +77,62 @@ public class AnalyserGUI extends JFrame implements ActionListener {
 		start.addActionListener(this);
 		stop.addActionListener(this);
 	}
-	
-	public void actionPerformed(ActionEvent ev){
+
+	public void actionPerformed(ActionEvent ev) {
 		Object src = ev.getSource();
 		if (src == chooseDir) {
 			JFileChooser fileChooser = new JFileChooser();
-			
+
 			fileChooser.setCurrentDirectory(new java.io.File("."));
 			fileChooser.setDialogTitle("Select the Project Dir");
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			fileChooser.setAcceptAllFileFilterUsed(false);
 
-		    int code = fileChooser.showOpenDialog(this);
+			int code = fileChooser.showOpenDialog(this);
 			if (code == JFileChooser.APPROVE_OPTION) {
 				File f = fileChooser.getSelectedFile();
 				selectedDirPath = f.getAbsolutePath();
 				selectedDir.setText("..." + selectedDirPath.substring(selectedDirPath.length() - 20, selectedDirPath.length()));
 				start.setEnabled(true);
 			}
-		} else if (src == start){	
+		} else if (src == start) {
 			controller.notifyStarted(selectedDirPath);
 			stop.setEnabled(true);
 			start.setEnabled(false);
-		} else if (src == stop){
+		} else if (src == stop) {
 			controller.notifyStopped();
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		}
 	}
-	
+
 	public void resetState() {
-		SwingUtilities.invokeLater(()-> {
+		SwingUtilities.invokeLater(() -> {
 			start.setEnabled(true);
 			stop.setEnabled(false);
 		});
 	}
-	
+
 	public void updateStats(Statistics.StatSnapshot stat) {
-		SwingUtilities.invokeLater(()-> {
-			String text = 
+		SwingUtilities.invokeLater(() -> {
+			String text =
 					"Statistics \n" +
-				    "---------------------\n" +
-					"Num packages: " + stat.getNumPackages() + "\n" +
-					"Num classes: " + stat.getNumClasses() + "\n" +
-					"Num interfaces: " + stat.getNumInterfaces() + "\n" +
-					"Num methods: " + stat.getNumMethods() + "\n" +
-					"Num fields: " + stat.getNumFields() + "\n" +
-					"---------------------\n";
-							
+							"---------------------\n" +
+							"Num packages: " + stat.getNumPackages() + "\n" +
+							"Num classes: " + stat.getNumClasses() + "\n" +
+							"Num interfaces: " + stat.getNumInterfaces() + "\n" +
+							"Num methods: " + stat.getNumMethods() + "\n" +
+							"Num fields: " + stat.getNumFields() + "\n" +
+							"---------------------\n";
+
 			stats.setText(text);
 		});
 	}
 
 	public void display() {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-        	this.setVisible(true);
-        });
-    }
-	
+		javax.swing.SwingUtilities.invokeLater(() -> {
+			this.setVisible(true);
+		});
+	}
+
 }

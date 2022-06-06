@@ -16,18 +16,18 @@ public class Test06c_backpressure_strategy_drop {
 		log("subscribing.");
 
 		/* never generating a MissingBackpressureException => elements are dropped */
-		
+
 		source
-		.onBackpressureDrop(v  -> {
-			log("DROPPING: " + v);
-		})
-		.observeOn(Schedulers.computation())
-		.subscribe(v -> {
-			log("consuming " + v);
-			Thread.sleep(100);
-		}, error -> {
-			log("ERROR: " + error);
-		});
+				.onBackpressureDrop(v -> {
+					log("DROPPING: " + v);
+				})
+				.observeOn(Schedulers.computation())
+				.subscribe(v -> {
+					log("consuming " + v);
+					Thread.sleep(100);
+				}, error -> {
+					log("ERROR: " + error);
+				});
 
 		Thread.sleep(1000);
 	}

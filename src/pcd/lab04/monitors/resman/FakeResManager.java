@@ -4,7 +4,7 @@ public class FakeResManager implements ResManager {
 
 	public FakeResManager(int nResourcesAvailable) {
 	}
-	
+
 	@Override
 	public int get() throws InterruptedException {
 		throw new NotImplementedException();

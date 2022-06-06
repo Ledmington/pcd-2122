@@ -18,7 +18,7 @@ public class PongerActor extends AbstractBehavior<PingerPongerProtocol> {
 		return newReceiveBuilder()
 				.onMessage(PingMsg.class, this::onPingMsg)
 				.build();
-		
+
 	}
 
 	private Behavior<PingerPongerProtocol> onPingMsg(PingMsg msg) {
@@ -27,15 +27,15 @@ public class PongerActor extends AbstractBehavior<PingerPongerProtocol> {
 		return this;
 	}
 
-	
+
 	/* public factory to create the actor */
 
 	public static Behavior<PingerPongerProtocol> create() {
 		return Behaviors.setup(PongerActor::new);
 	}
-	
+
 	private void log(String msg) {
 		System.out.println("[CounterUserActor] " + msg);
 	}
-	
+
 }

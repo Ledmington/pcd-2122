@@ -10,7 +10,7 @@ public class PackageReportImp implements PackageReport {
 	private List<InterfaceReport> interfaces;
 	private List<ClassReport> classes;
 	private String packageName;
-	
+
 	public PackageReportImp() {
 		interfaces = new ArrayList<InterfaceReport>();
 		classes = new ArrayList<ClassReport>();
@@ -19,15 +19,15 @@ public class PackageReportImp implements PackageReport {
 	public void setPackageName(String name) {
 		this.packageName = name;
 	}
-	
+
 	public void addClassReport(ClassReport c) {
 		classes.add(c);
 	}
-	
+
 	public void addInterfaceReport(InterfaceReport i) {
 		interfaces.add(i);
 	}
-	
+
 
 	@Override
 	public String getPackageName() {

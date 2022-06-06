@@ -13,19 +13,20 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
 
 class MethodNameCollector extends VoidVisitorAdapter<List<String>> {
-  public void visit(MethodDeclaration md, List<String> collector) {
-	  super.visit(md, collector);
-	  collector.add(md.getNameAsString());
-  }
+	public void visit(MethodDeclaration md, List<String> collector) {
+		super.visit(md, collector);
+		collector.add(md.getNameAsString());
+	}
 }
 
 class FullCollector extends VoidVisitorAdapter<Void> {
 
-	class A {}
-	
+	class A {
+	}
+
 	private int aField;
 	private MethodNameCollector anotherField;
-	
+
 	public void visit(PackageDeclaration fd, Void collector) {
 		super.visit(fd, collector);
 		System.out.println(fd);
@@ -35,7 +36,7 @@ class FullCollector extends VoidVisitorAdapter<Void> {
 		super.visit(cd, collector);
 		System.out.println(cd.getNameAsString());
 	}
-	
+
 	public void visit(FieldDeclaration fd, Void collector) {
 		super.visit(fd, collector);
 		System.out.println(fd);
@@ -52,14 +53,14 @@ public class TestJavaParser {
 
 	public static void main(String[] args) throws Exception {
 		CompilationUnit cu = StaticJavaParser.parse(new File("src/pcd/ass02/TestJavaParser.java"));
-		
+
 		var methodNames = new ArrayList<String>();
 		var methodNameCollector = new MethodNameCollector();
-		methodNameCollector.visit(cu,methodNames);
+		methodNameCollector.visit(cu, methodNames);
 		methodNames.forEach(n -> System.out.println("MethodNameCollected:" + n));
-		
+
 		var fullc = new FullCollector();
 		fullc.visit(cu, null);
-		
+
 	}
 }

@@ -1,11 +1,11 @@
 package pcd.ass01.concur;
 
 public class SimulationViewerAgent extends BaseAgent {
-	
+
 	private SimulationModel model;
 	private Flag stopFlag;
 	private SimulationView view;
-	
+
 	public SimulationViewerAgent(SimulationModel model, SimulationView view, Flag stopFlag) {
 		super("viewer");
 		this.model = model;
@@ -19,7 +19,7 @@ public class SimulationViewerAgent extends BaseAgent {
 			try {
 				Thread.sleep(20);
 				SimulationModel.SimulationSnapshot snap = model.getSnapshot();
-				view.display(snap);			
+				view.display(snap);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

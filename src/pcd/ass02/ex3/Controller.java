@@ -7,21 +7,21 @@ public class Controller {
 	private Flag stopFlag;
 	private Statistics stats;
 	private AnalyserView view;
-	
+
 	public Controller(Statistics stats) {
 		this.stats = stats;
 		this.stopFlag = new Flag();
 	}
-	
+
 	public synchronized void setView(AnalyserView view) {
 		this.view = view;
 	}
-	
+
 	public synchronized void notifyStarted(String selectedDir) {
-		Vertx  vertx = Vertx.vertx();
+		Vertx vertx = Vertx.vertx();
 		vertx.deployVerticle(new AnalyserAgent(stats, selectedDir, view));
 	}
-	
+
 	public synchronized void notifyStopped() {
 		stopFlag.set();
 	}

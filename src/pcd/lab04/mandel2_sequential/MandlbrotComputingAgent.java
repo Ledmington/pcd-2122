@@ -3,10 +3,9 @@ package pcd.lab04.mandel2_sequential;
 import java.util.concurrent.*;
 
 /**
- * Master controller agent 
- * 
- * @author aricci
+ * Master controller agent
  *
+ * @author aricci
  */
 public class MandlbrotComputingAgent extends Thread {
 
@@ -15,16 +14,16 @@ public class MandlbrotComputingAgent extends Thread {
 	private Complex c0;
 	private double diam;
 	private Flag stopFlag;
-	
-	public MandlbrotComputingAgent(Complex c0, double diam, MandelbrotSet set, MandelbrotView view, Flag stopFlag){
+
+	public MandlbrotComputingAgent(Complex c0, double diam, MandelbrotSet set, MandelbrotView view, Flag stopFlag) {
 		this.set = set;
 		this.view = view;
 		this.c0 = c0;
 		this.diam = diam;
 		this.stopFlag = stopFlag;
 	}
-	
-	public void run(){
+
+	public void run() {
 		try {
 			view.changeState("Processing...");
 			long t0 = System.currentTimeMillis();
@@ -32,35 +31,35 @@ public class MandlbrotComputingAgent extends Thread {
 			boolean stopped = false;
 			int nSlices = 20;
 			int w = set.getSizeX();
-	       	int x0 = 0;
-	       	int dx = w / nSlices;       
-	    	
-	       	for (int i = 0; i < nSlices-1; i++){
-				set.computeSlice(x0, x0 + dx, c0, diam);				
+			int x0 = 0;
+			int dx = w / nSlices;
+
+			for (int i = 0; i < nSlices - 1; i++) {
+				set.computeSlice(x0, x0 + dx, c0, diam);
 				x0 += dx;
-				if (stopFlag.isSet()){
+				if (stopFlag.isSet()) {
 					stopped = true;
 					break;
-				} 
-	       	}
-			
-	       	if (!stopped){
+				}
+			}
+
+			if (!stopped) {
 				set.computeSlice(x0, w, c0, diam);
 				view.setUpdated(set);
-    				long t1 = System.currentTimeMillis();
-    				view.changeState("completed - time elapsed: "+(t1-t0));
+				long t1 = System.currentTimeMillis();
+				view.changeState("completed - time elapsed: " + (t1 - t0));
 			} else {
-	    			view.changeState("interrupted");
+				view.changeState("interrupted");
 			}
-		} catch(Exception ex){
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	private void log(String msg){
-		synchronized(System.out){
+
+	private void log(String msg) {
+		synchronized (System.out) {
 			System.out.println(msg);
 		}
 	}
-	
+
 }

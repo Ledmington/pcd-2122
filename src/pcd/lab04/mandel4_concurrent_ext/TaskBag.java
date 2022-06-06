@@ -13,7 +13,7 @@ public class TaskBag {
 	public synchronized void clear() {
 		buffer.clear();
 	}
-	
+
 	public synchronized void addNewTask(Task task) {
 		buffer.addLast(task);
 		notifyAll();
@@ -23,9 +23,10 @@ public class TaskBag {
 		while (buffer.isEmpty()) {
 			try {
 				wait();
-			} catch (Exception ex) {}
+			} catch (Exception ex) {
+			}
 		}
-		return buffer.removeFirst(); 
+		return buffer.removeFirst();
 	}
-	
+
 }

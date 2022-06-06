@@ -1,4 +1,5 @@
 package pcd.lab06.compfut;
+
 import java.util.concurrent.CompletableFuture;
 
 public class Test2_accept {
@@ -17,13 +18,14 @@ public class Test2_accept {
 		log("going to sleep.");
 		waitFor(10000);
 	}
-	
+
 	private static void waitFor(long dt) {
 		try {
 			Thread.sleep(dt);
-		} catch (Exception ex) {}
+		} catch (Exception ex) {
+		}
 	}
-	
+
 	private static void log(String msg) {
 		System.out.println("" + Thread.currentThread() + " " + msg);
 	}

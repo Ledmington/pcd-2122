@@ -18,19 +18,19 @@ public class Test06d_backpressure_strategy_throttle {
 		log("subscribing.");
 
 		/* using throttleLast to reduce the flow (effect: less elements are dropped) */
-		 
+
 		source
-		.throttleLast(100, TimeUnit.MILLISECONDS)	// emits only the last item in 100 ms 
-		.onBackpressureDrop(v  -> {
-			log("DROPPING: " + v);
-		})
-		.observeOn(Schedulers.computation())
-		.subscribe(v -> {
-			log("consuming " + v);
-			Thread.sleep(100);
-		}, error -> {
-			log("ERROR: " + error);
-		});
+				.throttleLast(100, TimeUnit.MILLISECONDS)    // emits only the last item in 100 ms
+				.onBackpressureDrop(v -> {
+					log("DROPPING: " + v);
+				})
+				.observeOn(Schedulers.computation())
+				.subscribe(v -> {
+					log("consuming " + v);
+					Thread.sleep(100);
+				}, error -> {
+					log("ERROR: " + error);
+				});
 
 		Thread.sleep(1000);
 	}

@@ -11,17 +11,17 @@ import io.vertx.core.Vertx;
 import pcd.ass02.*;
 
 class LibTester extends AbstractVerticle {
-	
-	public void start() {		
+
+	public void start() {
 		Flag stopFlag = new Flag();
 		var lib = new ProjectAnalyzerLib(vertx, stopFlag);
-		
+
 		// this.testClassReport(lib);
 		// this.testPackageReport(lib);
 		this.testProjectReport(lib);
 		// this.testProjectAnalysis(lib);
-	}	
-	
+	}
+
 	private void testClassReport(ProjectAnalyzerExt lib) {
 		Future<ClassReport> repf = lib.getClassReport("src/pcd/ass02/data/MyClass.java");
 		repf.onSuccess(rep -> {
@@ -36,7 +36,7 @@ class LibTester extends AbstractVerticle {
 		Future<PackageReport> prepf = lib.getPackageReport("src/pcd/ass02/data");
 		prepf.onSuccess(rep -> {
 			log("done");
-			for (var c: rep.getClassesInfo()) {
+			for (var c : rep.getClassesInfo()) {
 				log("-> " + c.getFullClassName());
 			}
 		});
@@ -53,13 +53,13 @@ class LibTester extends AbstractVerticle {
 		vertx.eventBus().consumer("my-topic", msg -> {
 			log("new elem: " + msg.body());
 		});
-		
+
 		Future<Void> repf = lib.analyzeProject("src/pcd/ass02/data", "my-topic");
 		repf.onSuccess(h -> {
 			log("done.");
-		});		
+		});
 	}
-	
+
 	private void log(String s) {
 		System.out.println("[LibTester] " + s);
 	}
@@ -68,9 +68,9 @@ class LibTester extends AbstractVerticle {
 public class TestLib {
 
 	public static void main(String[] args) {
-		Vertx  vertx = Vertx.vertx();
+		Vertx vertx = Vertx.vertx();
 		vertx.deployVerticle(new LibTester());
-		
+
 	}
 
 }

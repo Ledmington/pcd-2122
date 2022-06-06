@@ -13,7 +13,7 @@ public class MasterAgent extends BaseAgent {
 	private final int nWorkers;
 	private final boolean withView;
 	private ExecutorService exec;
-	
+
 	public MasterAgent(SimulationModel model, Flag stopFlag) {
 		super("master");
 		this.model = model;
@@ -31,13 +31,13 @@ public class MasterAgent extends BaseAgent {
 		this.nWorkers = nWorkers;
 		withView = false;
 	}
-	
+
 	public void run() {
-		exec = Executors.newFixedThreadPool(nWorkers);		
+		exec = Executors.newFixedThreadPool(nWorkers);
 		long iter = 0;
 
 		/* simulation loop */
-		
+
 		try {
 			while (iter < nSteps && !stopFlag.isSet()) {
 
@@ -46,14 +46,18 @@ public class MasterAgent extends BaseAgent {
 					futs.add(exec.submit(new UpdateVelTask(model, i)));
 				}
 
-				for (var f: futs) { f.get(); }
-				
+				for (var f : futs) {
+					f.get();
+				}
+
 				futs.clear();
 				for (int i = 0; i < model.getNumBodies(); i++) {
 					futs.add(exec.submit(new UpdatePosTask(model, i)));
 				}
-	
-				for (var f: futs) { f.get(); }
+
+				for (var f : futs) {
+					f.get();
+				}
 
 				if (withView) {
 					model.makeSnapshot();
@@ -61,10 +65,10 @@ public class MasterAgent extends BaseAgent {
 
 				model.nextCycle();
 				iter++;
-			}			
+			}
 			log("done " + iter);
 			exec.shutdown();
-			
+
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

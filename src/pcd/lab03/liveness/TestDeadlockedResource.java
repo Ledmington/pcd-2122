@@ -1,10 +1,9 @@
 package pcd.lab03.liveness;
 
 /**
- * Deadlock example 
- * 
- * @author aricci
+ * Deadlock example
  *
+ * @author aricci
  */
 public class TestDeadlockedResource {
 	public static void main(String[] args) {

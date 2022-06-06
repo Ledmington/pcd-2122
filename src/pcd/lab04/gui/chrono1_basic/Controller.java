@@ -6,17 +6,17 @@ public class Controller {
 	private Flag stopFlag;
 	private CounterAgent agent;
 	private Counter counter;
-	
+
 	public Controller(Counter counter) {
 		this.counter = counter;
 		this.stopFlag = new Flag();
 	}
-	
+
 	public void notifyStarted() {
 		agent = new CounterAgent(counter, stopFlag, DELTA_TIME);
-		agent.start();				
+		agent.start();
 	}
-	
+
 	public void notifyStopped() {
 		stopFlag.set();
 	}

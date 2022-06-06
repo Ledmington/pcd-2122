@@ -4,11 +4,11 @@ public class StartSynch {
 
 	private boolean started;
 	private Task fullJob;
-	
-	public StartSynch(){
+
+	public StartSynch() {
 		started = false;
 	}
-	
+
 	public synchronized Task waitStart() {
 		while (!started) {
 			try {

@@ -6,17 +6,17 @@ import java.util.List;
 public class TestBarrier {
 
 	public static void main(String[] args) {
-		
+
 		int nWorkers = 10;
-		
+
 		Barrier barrier = new ReusableBarrier(nWorkers);
-		
+
 		List<Worker> workers = new ArrayList<>();
 		for (int i = 0; i < nWorkers; i++) {
-			workers.add(new Worker("Worker-"+i, barrier));
+			workers.add(new Worker("Worker-" + i, barrier));
 		}
 
-		for (Worker w: workers) {
+		for (Worker w : workers) {
 			w.start();
 		}
 	}

@@ -3,7 +3,7 @@ package pcd.lab06.executors.quad3_withfutures;
 import java.util.concurrent.Callable;
 
 
-public class ComputeAreaTask implements Callable<Double>  {
+public class ComputeAreaTask implements Callable<Double> {
 
 	private IFunction mf;
 	private double a, b;

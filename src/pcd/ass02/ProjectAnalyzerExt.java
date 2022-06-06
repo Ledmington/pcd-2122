@@ -1,26 +1,26 @@
 package pcd.ass02;
 
 import io.vertx.core.*;
+
 import java.util.function.*;
 
 /**
- * 
- * Revised ProjectAnalyzer interface 
- * 
+ * Revised ProjectAnalyzer interface
+ * <p>
  * In this revision, the method analyzeProject uses an event bus topic
  * to generate the events to be observed by the client of the library.
- * 
- * 
+ * <p>
+ * <p>
  * ProjectAnalyzerExt
- * @author aricci
  *
+ * @author aricci
  */
 public interface ProjectAnalyzerExt {
 
 	/**
 	 * Async method to retrieve the report about a specific class,
 	 * given the full path of the class source file
-	 * 
+	 *
 	 * @param srcClassFileName
 	 * @return
 	 */
@@ -29,7 +29,7 @@ public interface ProjectAnalyzerExt {
 	/**
 	 * Async method to retrieve the report about a specific interface,
 	 * given the full path of the interface source file
-	 * 
+	 *
 	 * @param srcClassFileName
 	 * @return
 	 */
@@ -38,7 +38,7 @@ public interface ProjectAnalyzerExt {
 	/**
 	 * Async method to retrieve the report about a package,
 	 * given the full path of the package folder
-	 * 
+	 *
 	 * @param srcClassFileName
 	 * @return
 	 */
@@ -46,17 +46,17 @@ public interface ProjectAnalyzerExt {
 
 	/**
 	 * Async method to retrieve the report about a project
-	 * given the full path of the project folder 
-	 * 
+	 * given the full path of the project folder
+	 *
 	 * @param srcProjectFolderPath
 	 * @return
 	 */
 	Future<ProjectReport> getProjectReport(String srcProjectFolderPath);
-	
+
 	/**
 	 * Async function that analyze a project given the full path of the project folder,
-	 * generating events on the specified topic of the event bus 
-	 * 
+	 * generating events on the specified topic of the event bus
+	 *
 	 * @param srcProjectFolderName
 	 * @param topic
 	 */

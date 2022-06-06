@@ -15,11 +15,11 @@ class TestExecBlocking extends AbstractVerticle {
 			log("blocking computation started");
 			try {
 				Thread.sleep(5000);
-				
+
 				/* notify promise completion */
 				promise.complete(100);
 			} catch (Exception ex) {
-				
+
 				/* notify failure */
 				promise.fail("exception");
 			}

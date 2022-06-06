@@ -3,10 +3,9 @@ package pcd.lab03.liveness.jpf;
 import pcd.lab03.liveness.Resource;
 
 /**
- * Deadlock example 
- * 
- * @author aricci
+ * Deadlock example
  *
+ * @author aricci
  */
 public class TestDeadlockedResource {
 	public static void main(String[] args) {

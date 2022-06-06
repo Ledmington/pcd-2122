@@ -4,11 +4,9 @@ import io.reactivex.rxjava3.core.Observable;
 import io.vertx.core.json.JsonObject;
 
 /**
- * 
  * Revised ProjectAnalyzer interface - Rx API
- * 
- * @author aricci
  *
+ * @author aricci
  */
 public interface ProjectAnalyzerRx {
 
@@ -19,6 +17,6 @@ public interface ProjectAnalyzerRx {
 	Observable<PackageReport> getPackageReport(String srcPackagePath);
 
 	Observable<ProjectReport> getProjectReport(String srcProjectFolderPath);
-	
+
 	Observable<JsonObject> analyzeProject(String srcProjectFolderName);
 }

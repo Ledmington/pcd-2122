@@ -4,6 +4,7 @@ import java.util.*;
 
 interface IObserved {
 	int getState();
+
 	void register(IObserver obj);
 }
 
@@ -16,7 +17,7 @@ class MyEntityA implements IObserved {
 	private List<IObserver> obsList;
 	private int state;
 
-	public MyEntityA(){
+	public MyEntityA() {
 		obsList = new ArrayList<IObserver>();
 	}
 
@@ -30,14 +31,14 @@ class MyEntityA implements IObserved {
 
 	public synchronized void changeState1() {
 		state++;
-		for (IObserver o: obsList){
+		for (IObserver o : obsList) {
 			o.notifyStateChanged(this);
 		}
 	}
 
 	public synchronized void changeState2() {
 		state--;
-		for (IObserver o: obsList){
+		for (IObserver o : obsList) {
 			o.notifyStateChanged(this);
 		}
 	}
@@ -47,24 +48,24 @@ class MyEntityB implements IObserver {
 
 	List<IObserved> obsList;
 
-	public MyEntityB(){
+	public MyEntityB() {
 		obsList = new ArrayList<IObserved>();
 	}
-	
-	public synchronized void observe(IObserved obj){
+
+	public synchronized void observe(IObserved obj) {
 		obsList.add(obj);
 		obj.register(this);
 	}
-	
+
 	public synchronized void notifyStateChanged(IObserved obs) {
-		synchronized(System.out){
-			System.out.println("state changed: "+obs.getState());
+		synchronized (System.out) {
+			System.out.println("state changed: " + obs.getState());
 		}
 	}
 
 	public synchronized int getOverallState() {
 		int sum = 0;
-		for (IObserved o: obsList){
+		for (IObserved o : obsList) {
 			sum += o.getState();
 		}
 		return sum;
@@ -73,14 +74,14 @@ class MyEntityB implements IObserver {
 
 
 class MyThreadA extends Thread {
- 	MyEntityA obj;
-	
- 	public MyThreadA(MyEntityA obj){
- 		this.obj = obj;
- 	}
- 	
-	public void run(){
-		while (true){
+	MyEntityA obj;
+
+	public MyThreadA(MyEntityA obj) {
+		this.obj = obj;
+	}
+
+	public void run() {
+		while (true) {
 			obj.changeState1();
 			obj.changeState2();
 		}
@@ -88,21 +89,21 @@ class MyThreadA extends Thread {
 }
 
 class MyThreadB extends Thread {
- 	MyEntityB obj;
-	
- 	public MyThreadB(MyEntityB obj){
- 		this.obj = obj;
- 	}
- 	
-	public void run(){
-		while (true){
-			log("overall state: "+obj.getOverallState());
+	MyEntityB obj;
+
+	public MyThreadB(MyEntityB obj) {
+		this.obj = obj;
+	}
+
+	public void run() {
+		while (true) {
+			log("overall state: " + obj.getOverallState());
 		}
 	}
 
-	private void log(String msg){
-		synchronized(System.out){
-			System.out.println("["+this+"] "+msg);
+	private void log(String msg) {
+		synchronized (System.out) {
+			System.out.println("[" + this + "] " + msg);
 		}
 	}
 }
@@ -110,11 +111,11 @@ class MyThreadB extends Thread {
 
 public class TestObsPatternDeadlock {
 	public static void main(String[] args) {
-		
+
 		MyEntityA objA = new MyEntityA();
 		MyEntityB objB = new MyEntityB();
 		objB.observe(objA);
-		
+
 		new MyThreadA(objA).start();
 		new MyThreadB(objB).start();
 

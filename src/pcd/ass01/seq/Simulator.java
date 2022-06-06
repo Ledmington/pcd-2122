@@ -34,7 +34,7 @@ public class Simulator {
 		// testBodySet3_some_bodies();
 		testBodySet4_many_bodies();
 	}
-	
+
 	public void execute(long nSteps) {
 
 		/* init virtual time */
@@ -110,20 +110,20 @@ public class Simulator {
 
 		return totalForce;
 	}
-	
+
 	private void testBodySet1_two_bodies() {
 		bounds = new Boundary(-4.0, -4.0, 4.0, 4.0);
 		bodies = new ArrayList<Body>();
-		bodies.add(new Body(0, new P2d(-0.1, 0), new V2d(0,0), 1));
-		bodies.add(new Body(1, new P2d(0.1, 0), new V2d(0,0), 2));		
+		bodies.add(new Body(0, new P2d(-0.1, 0), new V2d(0, 0), 1));
+		bodies.add(new Body(1, new P2d(0.1, 0), new V2d(0, 0), 2));
 	}
 
 	private void testBodySet2_three_bodies() {
 		bounds = new Boundary(-1.0, -1.0, 1.0, 1.0);
 		bodies = new ArrayList<Body>();
-		bodies.add(new Body(0, new P2d(0, 0), new V2d(0,0), 10));
-		bodies.add(new Body(1, new P2d(0.2, 0), new V2d(0,0), 1));		
-		bodies.add(new Body(2, new P2d(-0.2, 0), new V2d(0,0), 1));		
+		bodies.add(new Body(0, new P2d(0, 0), new V2d(0, 0), 10));
+		bodies.add(new Body(1, new P2d(0.2, 0), new V2d(0, 0), 1));
+		bodies.add(new Body(2, new P2d(-0.2, 0), new V2d(0, 0), 1));
 	}
 
 	private void testBodySet3_some_bodies() {
@@ -132,8 +132,8 @@ public class Simulator {
 		Random rand = new Random(System.currentTimeMillis());
 		bodies = new ArrayList<Body>();
 		for (int i = 0; i < nBodies; i++) {
-			double x = bounds.getX0()*0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
-			double y = bounds.getY0()*0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
+			double x = bounds.getX0() * 0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
+			double y = bounds.getY0() * 0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
 			Body b = new Body(i, new P2d(x, y), new V2d(0, 0), 10);
 			bodies.add(b);
 		}
@@ -145,8 +145,8 @@ public class Simulator {
 		Random rand = new Random(System.currentTimeMillis());
 		bodies = new ArrayList<Body>();
 		for (int i = 0; i < nBodies; i++) {
-			double x = bounds.getX0()*0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
-			double y = bounds.getY0()*0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
+			double x = bounds.getX0() * 0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
+			double y = bounds.getY0() * 0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
 			Body b = new Body(i, new P2d(x, y), new V2d(0, 0), 10);
 			bodies.add(b);
 		}
@@ -157,14 +157,12 @@ public class Simulator {
 		Random rand = new Random(System.currentTimeMillis());
 		bodies = new ArrayList<Body>();
 		for (int i = 0; i < nBodies; i++) {
-			double x = bounds.getX0()*0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
-			double y = bounds.getY0()*0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
+			double x = bounds.getX0() * 0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
+			double y = bounds.getY0() * 0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
 			Body b = new Body(i, new P2d(x, y), new V2d(0, 0), 10);
 			bodies.add(b);
 		}
 	}
 
-	
-	
 
 }

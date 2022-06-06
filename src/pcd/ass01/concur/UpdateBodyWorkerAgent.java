@@ -11,13 +11,13 @@ public class UpdateBodyWorkerAgent extends BaseAgent {
 	private TaskCompletionLatch bodyReady;
 	private int startIndex;
 	private int finalIndex;
-	
-	public UpdateBodyWorkerAgent(String id, 
-				SimulationModel model, int startIndex, int finalIndex,   
-				CyclicBarrier newCycleBarrier, CyclicBarrier updatePosBarrier, 
-				TaskCompletionLatch bodyReady,
-				Flag stopFlag) {
-		super("update-worker-"+id);
+
+	public UpdateBodyWorkerAgent(String id,
+								 SimulationModel model, int startIndex, int finalIndex,
+								 CyclicBarrier newCycleBarrier, CyclicBarrier updatePosBarrier,
+								 TaskCompletionLatch bodyReady,
+								 Flag stopFlag) {
+		super("update-worker-" + id);
 		this.model = model;
 		this.startIndex = startIndex;
 		this.finalIndex = finalIndex;
@@ -26,50 +26,50 @@ public class UpdateBodyWorkerAgent extends BaseAgent {
 		this.bodyReady = bodyReady;
 		this.stopFlag = stopFlag;
 	}
-	
+
 	public void run() {
 
 		double dt = model.getDT();
 		Boundary bounds = model.getBounds();
-		
+
 		while (!stopFlag.isSet()) {
-			try {				
+			try {
 				/* wait for a new cycle */
 				newCycleBarrier.await();
-				
+
 				/* compute bodies new pos */
 				for (int i = startIndex; i <= finalIndex; i++) {
 					Body b = model.getBody(i);
-	
+
 					/* compute total force on bodies */
 					V2d totalForce = computeTotalForceOnBody(b);
-	
+
 					/* compute instant acceleration */
 					V2d acc = new V2d(totalForce).scalarMul(1.0 / b.getMass());
-	
+
 					/* update velocity */
 					b.updateVelocity(acc, dt);
 				}
-	
+
 				updatePosBarrier.await();
-				
+
 				/* compute bodies new pos */
-	
+
 				for (int i = startIndex; i <= finalIndex; i++) {
 					Body b = model.getBody(i);
 					b.updatePos(dt);
 				}
-	
+
 				/* check collisions with boundaries */
-	
+
 				for (int i = startIndex; i <= finalIndex; i++) {
 					Body b = model.getBody(i);
 					b.checkAndSolveBoundaryCollision(bounds);
 				}
-				
+
 				bodyReady.notifyCompletion();
-				
-				
+
+
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -99,5 +99,5 @@ public class UpdateBodyWorkerAgent extends BaseAgent {
 
 		return totalForce;
 	}
-	
+
 }

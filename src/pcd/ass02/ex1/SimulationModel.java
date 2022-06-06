@@ -16,11 +16,11 @@ public class SimulationModel {
 
 	/* virtual time step */
 	private final double dt;
-	
+
 	private final int numBodiesToGen;
 
 	private volatile SimulationSnapshot snap;
-	
+
 	public SimulationModel() {
 		dt = 0.001;
 		this.numBodiesToGen = 0;
@@ -30,7 +30,7 @@ public class SimulationModel {
 		dt = 0.001;
 		this.numBodiesToGen = numBodies;
 	}
-	
+
 	public void init() {
 		vt = 0;
 		if (numBodiesToGen > 0) {
@@ -43,23 +43,23 @@ public class SimulationModel {
 			testBodySet4_many_bodies();
 		}
 	}
-	
+
 	public void nextCycle() {
 		vt = vt + dt;
 	}
-	
+
 	public double getDT() {
 		return dt;
 	}
-	
+
 	public double getVT() {
 		return vt;
 	}
-	
-	public Body getBody(int index){
+
+	public Body getBody(int index) {
 		return bodies.get(index);
 	}
-	
+
 	public int getNumBodies() {
 		return bodies.size();
 	}
@@ -67,10 +67,10 @@ public class SimulationModel {
 	public Boundary getBounds() {
 		return bounds;
 	}
-	
+
 	public void makeSnapshot() {
 		ArrayList<BodySnapshot> bods = new ArrayList<BodySnapshot>();
-		for (var b: bodies) {
+		for (var b : bodies) {
 			P2d pos = b.getPos();
 			bods.add(new BodySnapshot(new P2d(pos.getX(), pos.getY())));
 		}
@@ -80,20 +80,20 @@ public class SimulationModel {
 	public SimulationSnapshot getSnapshot() {
 		return snap;
 	}
-	
+
 	private void testBodySet1_two_bodies() {
 		bounds = new Boundary(-4.0, -4.0, 4.0, 4.0);
 		bodies = new ArrayList<Body>();
-		bodies.add(new Body(0, new P2d(-0.1, 0), new V2d(0,0), 1));
-		bodies.add(new Body(1, new P2d(0.1, 0), new V2d(0,0), 2));		
+		bodies.add(new Body(0, new P2d(-0.1, 0), new V2d(0, 0), 1));
+		bodies.add(new Body(1, new P2d(0.1, 0), new V2d(0, 0), 2));
 	}
 
 	private void testBodySet2_three_bodies() {
 		bounds = new Boundary(-1.0, -1.0, 1.0, 1.0);
 		bodies = new ArrayList<Body>();
-		bodies.add(new Body(0, new P2d(0, 0), new V2d(0,0), 10));
-		bodies.add(new Body(1, new P2d(0.2, 0), new V2d(0,0), 1));		
-		bodies.add(new Body(2, new P2d(-0.2, 0), new V2d(0,0), 1));		
+		bodies.add(new Body(0, new P2d(0, 0), new V2d(0, 0), 10));
+		bodies.add(new Body(1, new P2d(0.2, 0), new V2d(0, 0), 1));
+		bodies.add(new Body(2, new P2d(-0.2, 0), new V2d(0, 0), 1));
 	}
 
 	private void testBodySet3_some_bodies() {
@@ -102,8 +102,8 @@ public class SimulationModel {
 		Random rand = new Random(System.currentTimeMillis());
 		bodies = new ArrayList<Body>();
 		for (int i = 0; i < nBodies; i++) {
-			double x = bounds.getX0()*0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
-			double y = bounds.getY0()*0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
+			double x = bounds.getX0() * 0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
+			double y = bounds.getY0() * 0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
 			Body b = new Body(i, new P2d(x, y), new V2d(0, 0), 10);
 			bodies.add(b);
 		}
@@ -115,8 +115,8 @@ public class SimulationModel {
 		Random rand = new Random(System.currentTimeMillis());
 		bodies = new ArrayList<Body>();
 		for (int i = 0; i < nBodies; i++) {
-			double x = bounds.getX0()*0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
-			double y = bounds.getY0()*0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
+			double x = bounds.getX0() * 0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
+			double y = bounds.getY0() * 0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
 			Body b = new Body(i, new P2d(x, y), new V2d(0, 0), 10);
 			bodies.add(b);
 		}
@@ -127,25 +127,25 @@ public class SimulationModel {
 		Random rand = new Random(System.currentTimeMillis());
 		bodies = new ArrayList<Body>();
 		for (int i = 0; i < nBodies; i++) {
-			double x = bounds.getX0()*0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
-			double y = bounds.getY0()*0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
+			double x = bounds.getX0() * 0.25 + rand.nextDouble() * (bounds.getX1() - bounds.getX0()) * 0.25;
+			double y = bounds.getY0() * 0.25 + rand.nextDouble() * (bounds.getY1() - bounds.getY0()) * 0.25;
 			Body b = new Body(i, new P2d(x, y), new V2d(0, 0), 10);
 			bodies.add(b);
 		}
 	}
-	
+
 	static public class BodySnapshot {
 		private P2d pos;
-		
+
 		public BodySnapshot(P2d pos) {
 			this.pos = pos;
 		}
-		
+
 		public P2d getPos() {
 			return pos;
 		}
 	}
-	
+
 	static public class SimulationSnapshot {
 
 		/* bodies in the field */
@@ -165,14 +165,14 @@ public class SimulationModel {
 		public double getVT() {
 			return vt;
 		}
-		
-		public ArrayList<BodySnapshot> getBodies(){
+
+		public ArrayList<BodySnapshot> getBodies() {
 			return bodies;
-		}	
-		
+		}
+
 		public Boundary getBounds() {
 			return bounds;
 		}
 	}
-	
+
 }

@@ -5,16 +5,16 @@ import java.util.Random;
 public class Worker extends Thread {
 
 	private final Barrier barrier;
-	
+
 	public Worker(String name, Barrier barrier) {
 		super(name);
 		this.barrier = barrier;
 	}
-	
+
 	public void run() {
 		Random gen = new Random(System.nanoTime());
 		try {
-			for(int i=0; i<10; i++) {
+			for (int i = 0; i < 10; i++) {
 				log("before " + i);
 				barrier.hitAndWaitAll();
 				log("after " + i);
@@ -23,10 +23,10 @@ public class Worker extends Thread {
 			log("Interrupted!");
 		}
 	}
-	
+
 	private void log(String msg) {
-		synchronized(System.out) {
-			System.out.println("[ "+getName()+" ] "+msg);
+		synchronized (System.out) {
+			System.out.println("[ " + getName() + " ] " + msg);
 		}
 	}
 }

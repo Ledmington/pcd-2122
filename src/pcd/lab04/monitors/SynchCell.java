@@ -5,21 +5,22 @@ public class SynchCell {
 	private int value;
 	private boolean available;
 
-	public SynchCell(){
+	public SynchCell() {
 		available = false;
 	}
 
-	public synchronized void set(int v){
+	public synchronized void set(int v) {
 		value = v;
 		available = true;
-		notifyAll();  
+		notifyAll();
 	}
 
 	public synchronized int get() {
-		while (!available){
+		while (!available) {
 			try {
 				wait();
-			} catch (InterruptedException ex){}
+			} catch (InterruptedException ex) {
+			}
 		}
 		return value;
 	}

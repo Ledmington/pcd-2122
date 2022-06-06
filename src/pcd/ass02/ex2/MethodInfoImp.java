@@ -16,7 +16,7 @@ public class MethodInfoImp implements MethodInfo {
 		this.endLine = endLine;
 		this.parent = parent;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;

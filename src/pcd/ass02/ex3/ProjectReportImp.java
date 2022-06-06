@@ -10,20 +10,20 @@ public class ProjectReportImp implements ProjectReport {
 
 	private String mainClass;
 	private List<PackageReport> packages;
-	
-	public ProjectReportImp(){
+
+	public ProjectReportImp() {
 		packages = new ArrayList<PackageReport>();
 	}
-		
+
 	@Override
 	public String getMainClass() {
 		return mainClass;
 	}
-		
+
 	public void addPackageReport(PackageReport rep) {
 		packages.add(rep);
 	}
-	
+
 	@Override
 	public List<PackageReport> getPackages() {
 		return packages;

@@ -8,8 +8,8 @@ public class TestCounter {
 		int ntimes = Integer.parseInt(args[0]);
 		UnsafeCounter c = new UnsafeCounter(0);
 		Lock lock = new ReentrantLock();
-		Worker w1 = new Worker(c,ntimes, lock);
-		Worker w2 = new Worker(c,ntimes, lock);
+		Worker w1 = new Worker(c, ntimes, lock);
+		Worker w2 = new Worker(c, ntimes, lock);
 
 		Cron cron = new Cron();
 		cron.start();

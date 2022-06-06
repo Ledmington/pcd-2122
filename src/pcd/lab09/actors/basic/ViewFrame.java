@@ -30,7 +30,7 @@ public class ViewFrame extends JFrame {
 			}
 		});
 	}
-	
+
 	public void display() {
 		SwingUtilities.invokeLater(() -> {
 			this.setVisible(true);
