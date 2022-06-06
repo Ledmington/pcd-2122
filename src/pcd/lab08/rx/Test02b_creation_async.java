@@ -2,13 +2,15 @@ package pcd.lab08.rx;
 
 import io.reactivex.rxjava3.core.*;
 
+import java.util.Observable;
+
 public class Test02b_creation_async {
 
 	public static void main(String[] args) throws Exception {
 
 		log("Creating an observable (cold) using its own thread.");
 
-		Observable<Integer> source = Observable.create(emitter -> {		     
+		Observable<Integer> source = Observable.create(emitter -> {
 			new Thread(() -> {
 				int i = 0;
 				while (i < 20){
@@ -17,7 +19,7 @@ public class Test02b_creation_async {
 						emitter.onNext(i);
 						Thread.sleep(200);
 						i++;
-					} catch (Exception ex){}
+					} catch (Exception ignored){}
 				}
 			}).start();
 		 });
