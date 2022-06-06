@@ -1,13 +1,12 @@
-package pcd.ass01.seq;
+package pcd.ass02.ex1;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
-public class Simulator {
-
-	private SimulationView viewer;
+public class SimulationModel {
 
 	/* bodies in the field */
-	ArrayList<Body> bodies;
+	private ArrayList<Body> bodies;
 
 	/* boundary of the field */
 	private Boundary bounds;
@@ -16,99 +15,70 @@ public class Simulator {
 	private double vt;
 
 	/* virtual time step */
-	double dt;
+	private final double dt;
+	
+	private final int numBodiesToGen;
 
-	/* for testing performances */
-	public Simulator(int nBodies) {
-		this.viewer = null;
-		testBodySet(nBodies);
+	private volatile SimulationSnapshot snap;
+	
+	public SimulationModel() {
+		dt = 0.001;
+		this.numBodiesToGen = 0;
 	}
 
-	public Simulator(SimulationView viewer) {
-		this.viewer = viewer;
-
-		/* initializing boundary and bodies */
-
-		// testBodySet1_two_bodies();
-		// testBodySet2_three_bodies();
-		// testBodySet3_some_bodies();
-		testBodySet4_many_bodies();
+	public SimulationModel(int numBodies) {
+		dt = 0.001;
+		this.numBodiesToGen = numBodies;
 	}
 	
-	public void execute(long nSteps) {
-
-		/* init virtual time */
-
+	public void init() {
 		vt = 0;
-		dt = 0.001;
-
-		long iter = 0;
-
-		/* simulation loop */
-
-		while (iter < nSteps) {
-
-			/* update bodies velocity */
-
-			for (int i = 0; i < bodies.size(); i++) {
-				Body b = bodies.get(i);
-
-				/* compute total force on bodies */
-				V2d totalForce = computeTotalForceOnBody(b);
-
-				/* compute instant acceleration */
-				V2d acc = new V2d(totalForce).scalarMul(1.0 / b.getMass());
-
-				/* update velocity */
-				b.updateVelocity(acc, dt);
-			}
-
-			/* compute bodies new pos */
-
-			for (Body b : bodies) {
-				b.updatePos(dt);
-			}
-
-			/* check collisions with boundaries */
-
-			for (Body b : bodies) {
-				b.checkAndSolveBoundaryCollision(bounds);
-			}
-
-			/* update virtual time */
-
-			vt = vt + dt;
-			iter++;
-
-			/* display current stage */
-
-			if (viewer != null) {
-				viewer.display(bodies, vt, iter, bounds);
-			}
+		if (numBodiesToGen > 0) {
+			this.testBodySet(numBodiesToGen);
+		} else {
+			/* initializing boundary and bodies */
+			// testBodySet1_two_bodies();
+			// testBodySet2_three_bodies();
+			// testBodySet3_some_bodies();
+			testBodySet4_many_bodies();
 		}
 	}
+	
+	public void nextCycle() {
+		vt = vt + dt;
+	}
+	
+	public double getDT() {
+		return dt;
+	}
+	
+	public double getVT() {
+		return vt;
+	}
+	
+	public Body getBody(int index){
+		return bodies.get(index);
+	}
+	
+	public int getNumBodies() {
+		return bodies.size();
+	}
 
-	private V2d computeTotalForceOnBody(Body b) {
-
-		V2d totalForce = new V2d(0, 0);
-
-		/* compute total repulsive force */
-
-		for (int j = 0; j < bodies.size(); j++) {
-			Body otherBody = bodies.get(j);
-			if (!b.equals(otherBody)) {
-				try {
-					V2d forceByOtherBody = b.computeRepulsiveForceBy(otherBody);
-					totalForce.sum(forceByOtherBody);
-				} catch (Exception ex) {
-				}
-			}
+	public Boundary getBounds() {
+		return bounds;
+	}
+	
+	public void makeSnapshot() {
+		ArrayList<BodySnapshot> bods = new ArrayList<BodySnapshot>();
+		for (var b: bodies) {
+			P2d pos = b.getPos();
+			bods.add(new BodySnapshot(new P2d(pos.getX(), pos.getY())));
 		}
+		snap = new SimulationSnapshot(this.getVT(), bods, bounds);
+	}
 
-		/* add friction force */
-		totalForce.sum(b.getCurrentFrictionForce());
-
-		return totalForce;
+	public SimulationSnapshot getSnapshot() {
+		return snap;
 	}
 	
 	private void testBodySet1_two_bodies() {
@@ -163,8 +133,46 @@ public class Simulator {
 			bodies.add(b);
 		}
 	}
-
 	
+	static public class BodySnapshot {
+		private P2d pos;
+		
+		public BodySnapshot(P2d pos) {
+			this.pos = pos;
+		}
+		
+		public P2d getPos() {
+			return pos;
+		}
+	}
 	
+	static public class SimulationSnapshot {
 
+		/* bodies in the field */
+		private final ArrayList<BodySnapshot> bodies;
+
+		/* virtual time */
+		private double vt;
+
+		private Boundary bounds;
+
+		public SimulationSnapshot(double vt, ArrayList<BodySnapshot> bodies, Boundary bounds) {
+			this.vt = vt;
+			this.bodies = bodies;
+			this.bounds = bounds;
+		}
+
+		public double getVT() {
+			return vt;
+		}
+		
+		public ArrayList<BodySnapshot> getBodies(){
+			return bodies;
+		}	
+		
+		public Boundary getBounds() {
+			return bounds;
+		}
+	}
+	
 }
